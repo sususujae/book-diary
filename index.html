@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Book Diary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--cover:#FBE9AE;--paper:#FCF6E6;--card:#fff;--rule:#BFE1DA;--margin:#E2574C;--ink:#4A4458;--soft:#8C86A0;--pink:#FF8FA3;--pink-d:#E06E85;--mint:#6FBF9A;--line:#EADFC0;--hand:'Gaegu','Nanum Gothic',sans-serif;--body:'Nanum Gothic','Apple SD Gothic Neo','Malgun Gothic',sans-serif;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--cover:#3a3526;--paper:#2b2833;--card:#36323f;--rule:#3b4a49;--ink:#f1eadb;--soft:#aaa3bd;--line:#4b4658;color-scheme:dark}}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:14px var(--body)}
+button,input,textarea{font:inherit;color:inherit}
+.app{display:flex;min-height:100vh}
+.side{width:210px;flex-shrink:0;background:var(--cover);padding:28px 16px;display:flex;flex-direction:column;gap:6px}
+.brand{font:700 24px var(--hand);margin-bottom:10px}
+.tab{border:0;background:transparent;text-align:left;padding:9px 10px;border-radius:10px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between}
+.tab.on{background:rgba(74,68,88,.12)}
+.stat{margin-top:auto;font-size:12px;color:var(--soft);line-height:1.7}
+.main{flex:1;min-width:0;padding:28px 26px 50px;background:repeating-linear-gradient(var(--paper) 0 31px,var(--rule) 31px 32px);border-left:2px solid var(--margin)}
+@media(max-width:720px){.app{flex-direction:column}.side{width:100%;flex-direction:row;flex-wrap:wrap;align-items:center;padding:16px}.brand{width:100%;margin:0}.stat{display:none}.main{border-left:0;padding:20px 16px 40px}}
+h1{font:700 30px var(--hand);margin:0}
+.head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.btn{border:0;background:var(--pink);color:#fff;border-radius:14px;padding:10px 18px;font:700 16px var(--hand);box-shadow:0 3px 0 var(--pink-d);cursor:pointer}
+.btn:disabled{opacity:.4}
+.ghost{border:1.5px solid var(--line);background:transparent;border-radius:12px;padding:8px 14px;cursor:pointer;font-weight:700}
+.link{border:0;background:none;color:#C0523F;text-decoration:underline;cursor:pointer;font-size:12px}
+input,textarea{border:1.5px solid var(--line);border-radius:11px;padding:9px 12px;background:var(--card);width:100%;outline:none}
+.box{background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:18px;margin-bottom:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:22px}
+.book{cursor:pointer}
+.cv{aspect-ratio:2/3;border-radius:4px 10px 10px 4px;background:var(--cover) center/cover;box-shadow:0 8px 16px rgba(60,40,10,.25),inset 5px 0 6px -3px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:36px;overflow:hidden}
+.cv img{width:100%;height:100%;object-fit:cover;display:block}
+.bt{font-weight:800;margin:9px 0 2px;line-height:1.3}.ba{font-size:12px;color:var(--soft)}
+.bar{height:8px;background:rgba(140,134,160,.25);border-radius:9px;overflow:hidden;margin:7px 0 3px}
+.bar i{display:block;height:100%;background:var(--mint);border-radius:9px;transition:width .3s}
+.pg{font-size:11.5px;color:var(--soft)}
+.badge{font-size:11px;font-weight:800;border-radius:9px;padding:2px 8px;background:var(--cover);color:#6B5B3A}
+.row{display:flex;gap:12px;flex-wrap:wrap}.col{display:flex;flex-direction:column;gap:10px;flex:1;min-width:200px}
+.detail{display:flex;gap:22px;flex-wrap:wrap}.detail .cv{width:170px;flex-shrink:0}
+.stars button{border:0;background:none;font-size:24px;cursor:pointer;padding:0 2px;color:#E7C45A}
+.pgrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.pgrow input[type=number]{width:90px}
+input[type=range]{padding:0;accent-color:#6FBF9A}
+.log{border-left:3px solid var(--pink);background:var(--card);border-radius:0 10px 10px 0;padding:8px 12px;margin:8px 0;display:flex;justify-content:space-between;gap:8px}
+.log small{color:var(--soft)}
+.empty{text-align:center;padding:60px 10px;color:var(--soft)}
+label{font-weight:800;font-size:12.5px}
+select{border:1.5px solid var(--line);border-radius:11px;padding:9px 12px;background:var(--card);color:inherit;font:inherit;max-width:100%}
+.quote{background:var(--card);border-left:4px solid var(--mint);border-radius:0 12px 12px 0;padding:12px 14px;margin:10px 0;line-height:1.7;font-size:14.5px}
+.qm{font-size:12px;color:var(--soft);margin-top:6px}.qm a{color:var(--ink);font-weight:800;cursor:pointer;text-decoration:underline}
+.card{position:relative}
+.x{position:absolute;top:6px;right:6px;z-index:2;border:0;background:rgba(255,255,255,.92);color:#C0523F;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:14px;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.mv{display:flex;justify-content:space-between;margin-top:6px}.mv button{border:1.5px solid var(--line);background:var(--card);border-radius:8px;padding:3px 14px;cursor:pointer}.mv button:disabled{opacity:.3}
+.cf{background:#FFF1F0;color:#4A4458;border:1.5px solid #F3C4BF;border-radius:10px;padding:8px;font-size:12px;margin-top:8px;text-align:center}
+.cf button{border:0;border-radius:7px;padding:5px 12px;margin:4px 3px 0;cursor:pointer;font-weight:700;background:#fff;color:#4A4458}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.cal .dh{text-align:center;font-weight:800;font-size:12px;color:var(--soft)}
+.day{min-height:78px;background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:4px;cursor:pointer;display:flex;flex-direction:column;gap:3px;overflow:hidden}
+.day.td{border-color:var(--pink)}.day.sel{outline:2.5px solid var(--mint)}.day b{font-size:11.5px}
+.th{display:flex;flex-wrap:wrap;gap:2px;font-size:10px}.th span{width:18px;height:26px;border-radius:2px;background:var(--cover);overflow:hidden;display:block;font-size:11px}.th img{width:100%;height:100%;object-fit:cover;display:block}
+</style></head>
+<body><div class="app"><aside class="side" id="side"></aside><main class="main" id="main"></main></div>
+<script>
+const KEY="book-diary-v1";
+let S={books:[],tab:"all",open:null,form:false,q:"",cdel:null,cal:null,sort:(()=>{try{return localStorage.getItem("book-diary-sort")}catch(e){return null}})()||"recent"};
+let cloud=null;
+
+const $=s=>document.querySelector(s);
+const esc=t=>String(t==null?"":t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const uid=()=>Math.random().toString(36).slice(2,10);
+const today=()=>{const d=new Date();return d.getFullYear()+"."+String(d.getMonth()+1).padStart(2,"0")+"."+String(d.getDate()).padStart(2,"0")};
+const status=b=>!b.page?"want":(b.total&&b.page>=b.total?"done":"ing");
+const pct=b=>b.total?Math.min(100,Math.round(b.page/b.total*100)):0;
+const SL={want:"읽고 싶은 책",ing:"읽는 중",done:"완독"};
+
+/* ---------- 저장: 클라우드(db) 우선, 없으면 이 브라우저(localStorage) ---------- */
+function loadLocal(){try{S.books=JSON.parse(localStorage.getItem(KEY)||"[]")}catch(e){S.books=[]}}
+function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify(S.books))}catch(e){}}
+async function persist(b){
+  if(cloud){try{await cloud.col.doc(b.id).set(b)}catch(e){}} else saveLocal();
+}
+async function remove(b){
+  S.books=S.books.filter(x=>x.id!==b.id);if(cloud){try{await cloud.col.doc(b.id).delete()}catch(e){}}else saveLocal();
+}
+function change(b,patch){Object.assign(b,patch);persist(b);render()}
+
+(async function init(){
+  loadLocal();render();
+  try{
+    if(!window.claude||!claude.use)return;
+    const [user,db,assets]=await Promise.all([claude.use("user"),claude.use("db"),claude.use("assets")]);
+    if(!user||!db)return;
+    const id=await user.id();if(!id)return;
+    cloud={col:db.collection("data/users/"+id),assets};
+    const local=S.books.slice();
+    cloud.col.onSnapshot(snap=>{
+      S.books=snap.docs.map(d=>({...d.data(),id:d.id}));
+      render();
+    },()=>{});
+    // 이 브라우저에만 있던 책이 있으면 클라우드로 옮겨준다
+    if(local.length){setTimeout(()=>{local.forEach(b=>{if(!S.books.find(x=>x.id===b.id))cloud.col.doc(b.id).set(b).catch(()=>{})});localStorage.removeItem(KEY)},3000)}
+  }catch(e){}
+})();
+
+/* ---------- 표지 이미지: 줄여서(최대 480px) 저장 ---------- */
+function shrink(file){return new Promise((res,rej)=>{
+  const r=new FileReader();r.onerror=rej;
+  r.onload=()=>{const im=new Image();im.onerror=rej;im.onload=()=>{
+    const k=Math.min(1,480/Math.max(im.width,im.height));
+    const c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
+    c.getContext("2d").drawImage(im,0,0,c.width,c.height);
+    c.toBlob(bl=>res({blob:bl,url:c.toDataURL("image/jpeg",.82)}),"image/jpeg",.82)};im.src=r.result};
+  r.readAsDataURL(file)})}
+async function coverFrom(file){
+  const s=await shrink(file);
+  if(cloud&&cloud.assets){try{const a=await cloud.assets.upload(s.blob);return {cover:a.url,coverId:a.id}}catch(e){}}
+  return {cover:s.url};
+}
+
+/* ---------- 화면 ---------- */
+function render(){
+  const cnt=k=>S.books.filter(b=>status(b)===k).length;
+  const tabs=[["all","📚 전체",S.books.length],["ing","📖 읽는 중",cnt("ing")],["done","✅ 완독",cnt("done")],["want","🔖 읽고 싶은 책",cnt("want")],["quotes","✨ 문장 모음",S.books.reduce((a,b)=>a+(b.quotes||[]).length,0)],["cal","📅 독서 달력",""]];
+  const read=S.books.reduce((a,b)=>a+(+b.page||0),0);
+  $("#side").innerHTML='<div class="brand">📚 Book Diary</div>'+tabs.map(t=>`<button class="tab ${S.tab===t[0]&&!S.open?"on":""}" data-tab="${t[0]}"><span>${t[1]}</span><span>${t[2]}</span></button>`).join("")
+    +`<div class="stat">완독 ${cnt("done")}권<br>읽은 페이지 총 ${read.toLocaleString()}쪽<br>${cloud?"☁️ 계정에 저장 중":"💾 이 브라우저에 저장 중"}</div>`;
+  $("#side").querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;S.open=null;S.form=false;render()});
+  const b=S.books.find(x=>x.id===S.open);
+  b?renderDetail(b):S.tab==="quotes"?renderQuotes():S.tab==="cal"?renderCal():renderList();
+}
+
+function cover(b){return `<div class="cv">${b.cover?`<img src="${esc(b.cover)}" alt="">`:"📕"}</div>`}
+
+function sortOpts(){return {recent:"최근 기록순",manual:"내 순서 (◀ ▶로 직접)",title:"제목순",author:"저자순",progress:"진행률 높은순",rating:"별점순",added:"추가한 순"}}
+function ord(b){return b.order!=null?b.order:(b.updated||0)}
+function sortBooks(l){const k=S.sort;
+  const f=k==="manual"?(a,b)=>ord(a)-ord(b):k==="title"?(a,b)=>a.title.localeCompare(b.title,"ko"):k==="author"?(a,b)=>(a.author||"").localeCompare(b.author||"","ko"):k==="progress"?(a,b)=>pct(b)-pct(a):k==="rating"?(a,b)=>(b.rating||0)-(a.rating||0):k==="added"?(a,b)=>(a.added||"").localeCompare(b.added||"")||(a.updated||0)-(b.updated||0):(a,b)=>(b.updated||0)-(a.updated||0);
+  return l.slice().sort(f)}
+function moveBook(list,id,d){
+  const i=list.findIndex(b=>b.id===id),j=i+d;if(i<0||j<0||j>=list.length)return;
+  const vals=list.map(ord).sort((a,b)=>a-b);for(let k=1;k<vals.length;k++)if(vals[k]<=vals[k-1])vals[k]=vals[k-1]+1;
+  const n=list.slice();[n[i],n[j]]=[n[j],n[i]];
+  n.forEach((b,k)=>{if(b.order!==vals[k]){b.order=vals[k];persist(b)}});render()}
+function extra(b,i,list){
+  if(S.cdel===b.id)return `<div class="cf">삭제할까요?<br><button style="background:var(--margin);color:#fff" data-yes="${b.id}">삭제</button><button data-no="1">취소</button></div>`;
+  return S.sort==="manual"?`<div class="mv"><button data-mv="${b.id}|-1" ${i?"":"disabled"}>◀</button><button data-mv="${b.id}|1" ${i<list.length-1?"":"disabled"}>▶</button></div>`:""}
+function bump(b,from,to){const d=Object.assign({},b.days);if(to>from){const k=today();d[k]=(d[k]||0)+to-from}return d}
+function readsMap(){const m={};S.books.forEach(b=>{const p={};
+  (b.logs||[]).forEach(l=>{p[l.date]=(p[l.date]||0)+Math.max(0,l.to-(l.from||0))});
+  Object.keys(b.days||{}).forEach(d=>{p[d]=b.days[d]});
+  Object.keys(p).forEach(d=>(m[d]=m[d]||[]).push({b,pages:p[d]}))});return m}
+function renderCal(){
+  const now=new Date(),c=S.cal||(S.cal={y:now.getFullYear(),m:now.getMonth(),sel:today()});
+  const first=new Date(c.y,c.m,1),n=new Date(c.y,c.m+1,0).getDate(),m=readsMap();
+  const key=d=>c.y+"."+String(c.m+1).padStart(2,"0")+"."+String(d).padStart(2,"0");
+  let cells=["일","월","화","수","목","금","토"].map(x=>`<div class="dh">${x}</div>`).join("")+"<div></div>".repeat(first.getDay());
+  for(let d=1;d<=n;d++){const k=key(d),r=m[k]||[];
+    cells+=`<div class="day ${k===today()?"td":""} ${k===c.sel?"sel":""}" data-d="${k}"><b>${d}${S.books.some(b=>b.finished===k)?" 🎉":""}</b><div class="th">${r.slice(0,4).map(x=>`<span>${x.b.cover?`<img src="${esc(x.b.cover)}" alt="">`:"📕"}</span>`).join("")}${r.length>4?`<small>+${r.length-4}</small>`:""}</div></div>`}
+  const sel=m[c.sel]||[];
+  $("#main").innerHTML=`<div class="head"><h1>📅 독서 달력</h1><div class="pgrow"><button class="ghost" id="pm">◀</button><b>${c.y}년 ${c.m+1}월</b><button class="ghost" id="nm">▶</button><button class="ghost" id="tdy">오늘</button></div></div>
+  <div class="cal">${cells}</div>
+  <div class="box" style="margin-top:16px"><label>${esc(c.sel||"")} 에 읽은 책</label>${sel.map(x=>`<div class="log"><div><a data-open="${x.b.id}" style="cursor:pointer;font-weight:800;text-decoration:underline">${esc(x.b.title)}</a> <small>${x.pages?"+"+x.pages+"쪽":""}</small>${(x.b.logs||[]).filter(l=>l.date===c.sel&&l.memo).map(l=>`<div>${esc(l.memo)}</div>`).join("")}</div></div>`).join("")||'<div class="pg">이 날 기록이 없어요</div>'}</div>`;
+  $("#pm").onclick=()=>{c.m--;if(c.m<0){c.m=11;c.y--}renderCal()};
+  $("#nm").onclick=()=>{c.m++;if(c.m>11){c.m=0;c.y++}renderCal()};
+  $("#tdy").onclick=()=>{S.cal=null;renderCal()};
+  document.querySelectorAll("[data-d]").forEach(x=>x.onclick=()=>{c.sel=x.dataset.d;renderCal()});
+  bindQ();
+}
+function renderList(){
+  const q=S.q.trim().toLowerCase();
+  const list=sortBooks(S.books.filter(b=>(S.tab==="all"||status(b)===S.tab)&&(!q||(b.title+" "+b.author).toLowerCase().includes(q)))
+    );
+  $("#main").innerHTML=`<div class="head"><h1>나의 독서 일기 ✍️</h1><button class="btn" id="add">＋ 책 추가</button></div>
+  ${S.form?formHtml():""}
+  <div class="pgrow" style="margin-bottom:20px"><input id="q" placeholder="🔍 제목·저자 검색" value="${esc(S.q)}" style="flex:1;min-width:160px;width:auto"><select id="sort">${Object.entries(sortOpts()).map(([k,v])=>`<option value="${k}" ${S.sort===k?"selected":""}>↕ ${v}</option>`).join("")}</select></div>
+  ${list.length?`<div class="grid">${list.map((b,i)=>`<div class="card"><button class="x" data-xdel="${b.id}" title="삭제">🗑</button><div class="book" data-id="${b.id}">${cover(b)}<div class="bt">${esc(b.title)}</div><div class="ba">${esc(b.author)}</div>
+    <div class="bar"><i style="width:${pct(b)}%"></i></div><div class="pg">${b.page||0} / ${b.total||"?"}쪽 · ${pct(b)}%</div></div>${extra(b,i,list)}</div>`).join("")}</div>`
+    :`<div class="empty"><div style="font-size:36px">📖</div>${S.books.length?"조건에 맞는 책이 없어요":"아직 책이 없어요. 첫 책을 추가해보세요!"}</div>`}`;
+  $("#add").onclick=()=>{S.form=!S.form;render()};
+  const q$=$("#q");q$.oninput=e=>{S.q=e.target.value;const p=e.target.selectionStart;render();const n=$("#q");n.focus();n.setSelectionRange(p,p)};
+  document.querySelectorAll(".book").forEach(e=>e.onclick=()=>{S.open=e.dataset.id;render();scrollTo(0,0)});
+  $("#sort").onchange=e=>{S.sort=e.target.value;try{localStorage.setItem("book-diary-sort",S.sort)}catch(_){}render()};
+  document.querySelectorAll("[data-xdel]").forEach(x=>x.onclick=()=>{S.cdel=x.dataset.xdel;render()});
+  document.querySelectorAll("[data-yes]").forEach(x=>x.onclick=()=>{const b=S.books.find(y=>y.id===x.dataset.yes);S.cdel=null;if(b)remove(b);render()});
+  document.querySelectorAll("[data-no]").forEach(x=>x.onclick=()=>{S.cdel=null;render()});
+  document.querySelectorAll("[data-mv]").forEach(x=>x.onclick=()=>{const [id,d]=x.dataset.mv.split("|");moveBook(list,id,+d)});
+  if(S.form)bindForm();
+}
+
+let draft={};
+function formHtml(){return `<div class="box"><div class="row">
+  <div style="width:120px"><div class="cv" id="drop" tabindex="0" style="cursor:pointer;font-size:12px;text-align:center;padding:6px">${draft.cover?`<img src="${esc(draft.cover)}">`:"🖼️<br>표지 업로드<br>(클릭 / 붙여넣기)"}</div><input type="file" id="file" accept="image/*" hidden></div>
+  <div class="col"><div><label>제목</label><input id="f-title" placeholder="책 제목"></div>
+  <div><label>저자</label><input id="f-author" placeholder="저자"></div>
+  <div><label>전체 페이지 수</label><input id="f-total" type="number" min="1" placeholder="예: 320"></div></div></div>
+  <div style="text-align:right;margin-top:12px"><button class="ghost" id="cancel">취소</button> <button class="btn" id="save">저장 📌</button></div></div>`}
+function bindForm(){
+  const pick=async f=>{if(!f)return;Object.assign(draft,await coverFrom(f));$("#drop").innerHTML=`<img src="${esc(draft.cover)}">`};
+  $("#drop").onclick=()=>$("#file").click();$("#file").onchange=e=>pick(e.target.files[0]);
+  $("#drop").onpaste=e=>{const it=[...(e.clipboardData?.items||[])].find(i=>i.type.startsWith("image/"));if(it){e.preventDefault();pick(it.getAsFile())}};
+  $("#drop").ondragover=e=>e.preventDefault();$("#drop").ondrop=e=>{e.preventDefault();pick(e.dataTransfer.files[0])};
+  $("#cancel").onclick=()=>{draft={};S.form=false;render()};
+  $("#save").onclick=()=>{
+    const title=$("#f-title").value.trim();if(!title)return $("#f-title").focus();
+    const b={id:uid(),title,author:$("#f-author").value.trim(),total:+$("#f-total").value||0,page:0,rating:0,review:"",logs:[],added:today(),updated:Date.now(),order:Date.now(),...draft};
+    draft={};S.form=false;if(!cloud)S.books.push(b);persist(b);render();
+  };
+}
+
+const qItem=(b,q,full)=>`<div class="quote"><div>“${esc(q.text)}”</div><div class="qm">${full?`<a data-open="${b.id}">📕 ${esc(b.title)}</a> · `:""}${q.page?q.page+"쪽 · ":""}${esc(q.date)} <button class="link" data-qdel="${b.id}|${q.id}">삭제</button></div></div>`;
+function addQuote(b,text,page){text=text.trim();if(!text)return;change(b,{quotes:(b.quotes||[]).concat({id:uid(),text,page:+page||0,date:today()})})}
+function bindQ(){
+  document.querySelectorAll("[data-qdel]").forEach(x=>x.onclick=()=>{const [bi,qi]=x.dataset.qdel.split("|");const b=S.books.find(y=>y.id===bi);if(b)change(b,{quotes:b.quotes.filter(q=>q.id!==qi)})});
+  document.querySelectorAll("[data-open]").forEach(x=>x.onclick=()=>{S.open=x.dataset.open;render();scrollTo(0,0)});
+}
+function renderQuotes(){
+  const all=S.books.flatMap(b=>(b.quotes||[]).map(q=>({b,q}))).sort((x,y)=>(y.q.date||"").localeCompare(x.q.date||""));
+  $("#main").innerHTML=`<div class="head"><h1>마음에 드는 문장 ✨</h1></div>
+  ${S.books.length?`<div class="box"><div class="pgrow" style="margin-bottom:8px"><select id="qb">${S.books.map(b=>`<option value="${b.id}">${esc(b.title)}</option>`).join("")}</select><input type="number" id="qp" min="0" placeholder="쪽수" style="width:100px"></div>
+   <textarea id="qt" rows="3" placeholder="마음에 드는 문장을 그대로 적어보세요"></textarea>
+   <div style="text-align:right;margin-top:10px"><button class="btn" id="qs">문장 저장 📌</button></div></div>`:'<div class="empty">먼저 책을 추가해주세요</div>'}
+  ${all.map(x=>qItem(x.b,x.q,true)).join("")||(S.books.length?'<div class="empty">저장한 문장이 아직 없어요</div>':"")}`;
+  if($("#qs"))$("#qs").onclick=()=>{const b=S.books.find(y=>y.id===$("#qb").value);if(b)addQuote(b,$("#qt").value,$("#qp").value)};
+  bindQ();
+}
+function renderDetail(b){
+  const st=status(b);
+  $("#main").innerHTML=`<button class="ghost" id="back">← 목록으로</button>
+  <div class="box" style="margin-top:14px"><div class="detail">
+   <div><div id="cvbox" style="cursor:pointer" title="클릭해서 표지 변경">${cover(b)}</div><input type="file" id="file" accept="image/*" hidden></div>
+   <div class="col" style="min-width:240px">
+    <div><span class="badge">${SL[st]}</span> <span class="pg">시작 ${esc(b.added||"")}${b.finished?" · 완독 "+esc(b.finished):""}</span></div>
+    <h1 style="font-size:28px">${esc(b.title)}</h1><div class="ba" style="font-size:14px">${esc(b.author)}</div>
+    <div class="stars" id="stars">${[1,2,3,4,5].map(n=>`<button data-n="${n}">${n<=(b.rating||0)?"★":"☆"}</button>`).join("")}</div>
+    <div><label>📖 읽은 페이지</label>
+     <div class="bar" style="height:12px"><i style="width:${pct(b)}%"></i></div>
+     <div class="pgrow"><input type="number" id="pg" min="0" max="${b.total||""}" value="${b.page||0}"> <span>/</span>
+      <input type="number" id="tot" min="0" value="${b.total||""}" placeholder="전체" style="width:90px"> <span class="pg">쪽 (${pct(b)}%)</span></div>
+     ${b.total?`<input type="range" id="rg" min="0" max="${b.total}" value="${b.page||0}" style="margin-top:8px">`:""}
+     <div class="pgrow" style="margin-top:6px"><button class="ghost" data-add="10">+10</button><button class="ghost" data-add="30">+30</button><button class="ghost" id="fin">완독 🎉</button></div></div>
+   </div></div></div>
+  <div class="box"><label>✍️ 오늘 읽은 기록 남기기</label>
+   <div class="pgrow" style="margin:8px 0"><input type="number" id="lp" min="0" placeholder="어디까지? (쪽)" style="width:140px"><input id="lm" placeholder="인상 깊은 문장이나 생각을 적어보세요" style="flex:1;min-width:180px"><button class="btn" id="lsave">기록 📌</button></div>
+   ${(b.logs||[]).slice().reverse().map(l=>`<div class="log"><div><small>${esc(l.date)} · ${l.from||0}→${l.to}쪽 (+${Math.max(0,l.to-(l.from||0))})</small><div>${esc(l.memo)}</div></div><button class="link" data-del="${l.id}">삭제</button></div>`).join("")||'<div class="pg">아직 기록이 없어요</div>'}</div>
+  <div class="box"><label>✨ 마음에 드는 문장</label>
+   <div class="pgrow" style="margin:8px 0"><input type="number" id="q-pg" min="0" placeholder="쪽수" style="width:100px"><textarea id="q-text" rows="2" placeholder="문장을 그대로 적어보세요" style="flex:1;min-width:180px"></textarea><button class="btn" id="q-save">저장 📌</button></div>
+   ${(b.quotes||[]).map(q=>qItem(b,q,false)).join("")||'<div class="pg">아직 저장한 문장이 없어요</div>'}</div>
+  <div class="box"><label>💬 한줄평 / 전체 감상</label><textarea id="rv" rows="4" placeholder="이 책은 어땠나요?">${esc(b.review)}</textarea></div>
+  <button class="ghost" id="del" style="color:#C0523F">🗑 이 책 삭제</button>`;
+  $("#back").onclick=()=>{S.open=null;render()};
+  $("#cvbox").onclick=()=>$("#file").click();
+  $("#file").onchange=async e=>{const f=e.target.files[0];if(f)change(b,await coverFrom(f))};
+  $("#stars").querySelectorAll("button").forEach(x=>x.onclick=()=>change(b,{rating:+x.dataset.n===b.rating?0:+x.dataset.n}));
+  const setPage=p=>{p=Math.max(0,Math.round(+p||0));if(b.total)p=Math.min(p,b.total);
+    const patch={page:p,updated:Date.now(),days:bump(b,b.page||0,p)};if(b.total&&p>=b.total&&!b.finished)patch.finished=today();if(p<b.total)patch.finished="";change(b,patch)};
+  $("#pg").onchange=e=>setPage(e.target.value);
+  $("#tot").onchange=e=>change(b,{total:+e.target.value||0});
+  const rg=$("#rg");if(rg){rg.oninput=e=>{$("#pg").value=e.target.value};rg.onchange=e=>setPage(e.target.value)}
+  document.querySelectorAll("[data-add]").forEach(x=>x.onclick=()=>setPage((b.page||0)+ +x.dataset.add));
+  $("#fin").onclick=()=>b.total?setPage(b.total):($("#tot").focus(),$("#tot").placeholder="먼저 입력!");
+  $("#lsave").onclick=()=>{
+    const to=$("#lp").value===""?(b.page||0):+$("#lp").value,memo=$("#lm").value.trim();
+    if(!memo&&$("#lp").value==="")return;
+    const logs=(b.logs||[]).concat({id:uid(),date:today(),from:b.page||0,to,memo});
+    const p=b.total?Math.min(to,b.total):to;
+    change(b,{logs,page:p,days:bump(b,b.page||0,p),updated:Date.now(),finished:b.total&&p>=b.total?(b.finished||today()):""});
+  };
+  document.querySelectorAll("[data-del]").forEach(x=>x.onclick=()=>change(b,{logs:b.logs.filter(l=>l.id!==x.dataset.del)}));
+  $("#rv").onblur=e=>{if(e.target.value!==b.review)change(b,{review:e.target.value})};
+  $("#q-save").onclick=()=>addQuote(b,$("#q-text").value,$("#q-pg").value);
+  bindQ();
+  $("#del").onclick=()=>{$("#del").outerHTML='<span class="cf" id="dc">정말 삭제할까요? <button id="dy" style="background:var(--margin);color:#fff">삭제</button><button id="dn">취소</button></span>';$("#dy").onclick=()=>{S.open=null;remove(b);render()};$("#dn").onclick=()=>render()};
+}
+</script></body></html>
